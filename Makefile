@@ -6,7 +6,7 @@ CC = cc
 
 INCLUDES = -I./ -I./src
 
-FLAGS = -Wall -Wextra -Werror ${INCLUDES} -pthread -fsanitize=thread
+FLAGS = -Wall -Wextra ${INCLUDES} -pthread -fsanitize=thread
 
 NAME = philo
 
@@ -29,7 +29,7 @@ $(NAME) : $(OBJS)
 
 clean :
 	@echo "$(RED_TEXT)Cleaning $(NAME) Object Files"
-	@rm -rf	$(OBJ_FILES)
+	@rm -rf	$(OBJS)
 	@echo "$(NC_TEXT)"
 
 fclean : clean

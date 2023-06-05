@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bamrouch <bamrouch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:37:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/04 18:19:45 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/05 22:13:11 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "sys/types.h"
 #include "sys/time.h"
 #include "limits.h"
+#include "unistd.h"
 
 typedef enum e_boolean
 {
@@ -28,30 +29,52 @@ typedef enum e_boolean
     TRUE
 }   t_boolean;
 
+
+typedef enum e_philo_states
+{    
+    FORK_TAKEN,
+    EATING,
+    SLEEPING,
+    THINKING,
+    DIED    
+}   t_philo_states;
+
 typedef struct s_philo_params
 {
     time_t          start_timer;
-    pthread_mutex_t	*philo_mutexes;
+    pthread_mutex_t	*philo_forks;
+    pthread_t       *threads_id;
+    pthread_mutex_t read_philo_params;
     pthread_mutex_t	printf_mutex;
-
+    int             philosopher_id;
 }   t_philo_params;
 
-typedef struct s_philo
+typedef struct philo_instance
 {
     int nbr_of_philos;
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
     int nbr_of_eats;
+}   t_philo_instance;
+
+typedef struct s_philo
+{
+    t_philo_instance philo_info;
     t_boolean   parsing_error;
     t_philo_params params;
 }   t_philo;
 
+
+// initiators.c
+void    mutexes_initiator(t_philo *philo);
+void    thread_id_malloc(t_philo *philo);
 //int_parser.c
 void	parse_philo(int argc, char *argv[], t_philo *philo);
 //time.c
 time_t  elapsed_time(time_t start);
-
+// Philo_routine.c
+void    philo_routine(t_philo *philo);
 
 
 // helpers
