@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:57:50 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/05 22:13:47 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:50:22 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ int main(int argc, char *argv[])
         pthread_mutex_lock(&philo.params.read_philo_params);
         philo.params.philosopher_id = i;
         pthread_mutex_unlock(&philo.params.read_philo_params);
-        if(pthread_create(&philo.params.threads_id[i], NULL, philo_routine, &philo))
+        if(pthread_create(&philo.params.threads_id[i++], NULL, philo_routine, (void *) &philo))
         {
             exit_philo("couldn't create threads\n",&philo);
             return (1);
         }
-        pthread_detach(philo.params.threads_id[i++]);
     }
+    while (i-- > 0)
+        pthread_join(philo.params.threads_id[i], NULL);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 19:24:43 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/05 22:19:04 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:53:56 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void    mutexes_initiator(t_philo *philo)
     philo->params.philo_forks = malloc(sizeof(pthread_mutex_t) * philo->philo_info.nbr_of_philos);
     if (!philo->params.philo_forks)
     {
-        exit_philo("couldn't malloc philosophers forks\n", &philo);
+        exit_philo("couldn't malloc philosophers forks\n", philo);
         return;
     }
     if (pthread_mutex_init(&philo->params.printf_mutex, NULL))

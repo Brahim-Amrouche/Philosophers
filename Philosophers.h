@@ -6,22 +6,21 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:37:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/05 22:13:11 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:39:52 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 #define PHILOSOPHERS_H
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "unistd.h"
-#include "pthread.h"
-#include "string.h"
-#include "sys/types.h"
-#include "sys/time.h"
-#include "limits.h"
-#include "unistd.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/time.h>
+#include <limits.h>
 
 typedef enum e_boolean
 {
@@ -56,6 +55,7 @@ typedef struct philo_instance
     int time_to_eat;
     int time_to_sleep;
     int nbr_of_eats;
+    t_philo_states  state;
 }   t_philo_instance;
 
 typedef struct s_philo
