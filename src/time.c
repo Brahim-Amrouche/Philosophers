@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bamrouch <bamrouch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:04:58 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/04 18:18:54 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:51:49 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
+
+void    msleep(time_t delay)
+{
+    time_t n;
+
+    n = delay * 10;
+    while (n--)
+        usleep(100);
+}
 
 time_t elapsed_time(time_t start)
 {

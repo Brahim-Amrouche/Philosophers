@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:37:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/06 20:39:52 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/09 23:48:19 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ typedef struct s_philo_params
 {
     time_t          start_timer;
     pthread_mutex_t	*philo_forks;
-    pthread_t       *threads_id;
-    pthread_mutex_t read_philo_params;
+    pthread_t       thread_id;
     pthread_mutex_t	printf_mutex;
-    int             philosopher_id;
+    t_boolean       death;
 }   t_philo_params;
 
 typedef struct philo_instance
@@ -56,6 +55,7 @@ typedef struct philo_instance
     int time_to_sleep;
     int nbr_of_eats;
     t_philo_states  state;
+    time_t          wake_time;
 }   t_philo_instance;
 
 typedef struct s_philo
@@ -65,6 +65,11 @@ typedef struct s_philo
     t_philo_params params;
 }   t_philo;
 
+typedef struct  s_thread_data
+{
+    int i;
+    t_philo *philo;
+}   t_thread_data;
 
 // initiators.c
 void    mutexes_initiator(t_philo *philo);
@@ -72,9 +77,10 @@ void    thread_id_malloc(t_philo *philo);
 //int_parser.c
 void	parse_philo(int argc, char *argv[], t_philo *philo);
 //time.c
+void    msleep(time_t delay);
 time_t  elapsed_time(time_t start);
 // Philo_routine.c
-void    philo_routine(t_philo *philo);
+void    philo_routine(t_thread_data *data);
 
 
 // helpers
