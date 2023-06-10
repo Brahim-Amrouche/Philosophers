@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 19:24:43 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/09 23:48:33 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/10 13:38:08 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void    mutexes_initiator(t_philo *philo)
     }
     if (pthread_mutex_init(&philo->params.printf_mutex, NULL))
         exit_philo("couldnt initialize printf mutex\n", philo);
-    // if (pthread_mutex_init(&philo->params.read_philo_params, NULL))
-    //     exit_philo("couldnt initilize read_philo_params mutex\n", philo);
+    if (pthread_mutex_init(&philo->params.death_mutex, NULL))
+        exit_philo("couldnt initilize death mutex\n", philo);
     i = 0;
     while (i < philo->philo_info.nbr_of_philos)
     {
@@ -37,9 +37,9 @@ void    mutexes_initiator(t_philo *philo)
     
 }
 
-// void    thread_id_malloc(t_philo *philo)
-// {
-//     philo->params.threads_id = malloc(sizeof(pthread_t) * philo->philo_info.nbr_of_philos);
-//     if (!philo->params.threads_id)
-//         exit_philo("couldn't malloc enough threads ids", philo);
-// }
+void    thread_id_malloc(t_philo *philo)
+{
+    philo->params.threads_id = malloc(sizeof(pthread_t) * philo->philo_info.nbr_of_philos);
+    if (!philo->params.threads_id)
+        exit_philo("couldn't malloc enough threads ids", philo);
+}

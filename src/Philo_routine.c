@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:49:25 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/09 23:47:38 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/10 14:20:23 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 static  void    printf_philo_state(t_philo *philo, t_philo_instance *philosopher)
 {
     pthread_mutex_lock(&philo->params.printf_mutex);
+    pthread_mutex_lock(&philo->params.death_mutex);
+    if (philo->params.death)
+        return pthread_mutex_unlock(&philo->params.death_mutex),pthread_mutex_unlock(&philo->params.printf_mutex);
+    
+    pthread_mutex_unlock(&philo->params.death_mutex);
     if (philosopher->state == FORK_TAKEN)
         printf("%ld %d has taken a fork\n", elapsed_time(philo->params.start_timer), philosopher->nbr_of_philos);
     else if (philosopher->state == EATING)
@@ -30,20 +35,20 @@ static  void    printf_philo_state(t_philo *philo, t_philo_instance *philosopher
 
 static  t_boolean take_forks(t_philo *philo, t_philo_instance *philosopher)
 {
-    if (pthread_mutex_lock(&philo->params.philo_forks[philosopher->nbr_of_philos - 1]))
-        printf("hello error \n");
+    pthread_mutex_lock(&philo->params.philo_forks[philosopher->nbr_of_philos - 1]);
     if (philosopher->wake_time && 
         elapsed_time(philo->params.start_timer) - philosopher->wake_time >= philosopher->time_to_die)
     {
         philosopher->state = DIED;
         printf_philo_state(philo, philosopher);
+        pthread_mutex_lock(&philo->params.death_mutex);
         philo->params.death = TRUE;
+        pthread_mutex_unlock(&philo->params.death_mutex);
         return FALSE;
     }
     philosopher->state = FORK_TAKEN;
     printf_philo_state(philo, philosopher);
-    if (pthread_mutex_lock(&philo->params.philo_forks[philosopher->nbr_of_philos % philo->philo_info.nbr_of_philos]))
-        printf("error from the second \n");
+    pthread_mutex_lock(&philo->params.philo_forks[philosopher->nbr_of_philos % philo->philo_info.nbr_of_philos]);
     printf_philo_state(philo, philosopher);
     return TRUE;
 }
@@ -67,27 +72,32 @@ static void go_sleep(t_philo *philo, t_philo_instance *philosopher)
 static void think(t_philo *philo, t_philo_instance *philosopher)
 {
     philosopher->state = THINKING;
-    philosopher->wake_time = elapsed_time(philo->params.start_timer);
     printf_philo_state(philo, philosopher);
+    philosopher->wake_time = elapsed_time(philo->params.start_timer);
 }
 
 void    philo_routine(t_thread_data *data)
 {
     t_philo_instance philosopher;
     t_philo *philo;
+    t_boolean   meal_count;
 
     philo = data->philo;
     memset(&philosopher, 0, sizeof(t_philo_instance));
     philosopher = philo->philo_info;
     philosopher.nbr_of_philos = data->i + 1;
     free(data);
-    while (TRUE)
-    {
-        if(!take_forks(philo, &philosopher))
+    meal_count = FALSE;
+    if (philosopher.nbr_of_eats)
+        meal_count = TRUE;
+    while (!meal_count || philosopher.nbr_of_eats)
+    {   
+        if(philo->params.death || !take_forks(philo, &philosopher))
             break;
         eat(philo, &philosopher);
         go_sleep(philo, &philosopher);
         think(philo, &philosopher);
+        philosopher.nbr_of_eats--;
     }
 }
 

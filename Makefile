@@ -6,7 +6,7 @@ CC = cc
 
 INCLUDES = -I./ -I./src
 
-FLAGS = -Wall -Wextra ${INCLUDES} -pthread #-fsanitize=thread
+FLAGS = -Wall -Wextra ${INCLUDES} -pthread -fsanitize=thread
 
 NAME = philo
 

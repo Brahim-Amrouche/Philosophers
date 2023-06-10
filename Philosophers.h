@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:37:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/09 23:48:19 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/10 13:38:16 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ typedef struct s_philo_params
 {
     time_t          start_timer;
     pthread_mutex_t	*philo_forks;
-    pthread_t       thread_id;
+    pthread_t       *threads_id;
     pthread_mutex_t	printf_mutex;
+    pthread_mutex_t death_mutex;
     t_boolean       death;
 }   t_philo_params;
 

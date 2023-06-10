@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:57:50 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/09 23:48:59 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/10 13:54:45 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     if (philo.parsing_error)
         return(1);
     mutexes_initiator(&philo);
+    thread_id_malloc(&philo);
     if (philo.parsing_error)
         return (1);
     philo.params.start_timer = elapsed_time(0);
@@ -30,16 +31,17 @@ int main(int argc, char *argv[])
     while (i < philo.philo_info.nbr_of_philos)
     {
         data = malloc(sizeof(t_thread_data));
-        data->i = i++;
+        data->i = i;
         data->philo = &philo;
-        if(pthread_create(&philo.params.thread_id, NULL, philo_routine, (void *) data))
+        if(pthread_create(&philo.params.threads_id[i], NULL, philo_routine, (void *) data))
         {
             exit_philo("couldn't create threads\n",&philo);
             return (1);
         }
-        pthread_detach(philo.params.thread_id);
+        i++;
     }
-    while (!philo.params.death)
-        ;
+    i = 0;
+    while (i < philo.philo_info.nbr_of_philos)
+        pthread_join(philo.params.threads_id[i++], NULL);
     return (0);
 }
