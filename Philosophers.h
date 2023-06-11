@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:37:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/10 13:38:16 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:57:42 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef enum e_boolean
     FALSE,
     TRUE
 }   t_boolean;
-
 
 typedef enum e_philo_states
 {    
@@ -82,6 +81,8 @@ void    msleep(time_t delay);
 time_t  elapsed_time(time_t start);
 // Philo_routine.c
 void    philo_routine(t_thread_data *data);
+// cleaner.c
+void    philo_mem_cleaner(t_philo *philo);
 
 
 // helpers
@@ -90,7 +91,6 @@ size_t	ft_strlen(const char *s);
 // ft_atoi.c
 t_boolean   ft_isdigit(int c);
 long        ft_atoi(const char *str);
-
 
 //exit_philo.c
 void    exit_philo(char *message, t_philo *philo);

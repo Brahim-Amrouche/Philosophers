@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:49:25 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/10 14:20:23 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:21:44 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ static  void    printf_philo_state(t_philo *philo, t_philo_instance *philosopher
     pthread_mutex_lock(&philo->params.printf_mutex);
     pthread_mutex_lock(&philo->params.death_mutex);
     if (philo->params.death)
-        return pthread_mutex_unlock(&philo->params.death_mutex),pthread_mutex_unlock(&philo->params.printf_mutex);
-    
+    {
+        pthread_mutex_unlock(&philo->params.death_mutex);
+        pthread_mutex_unlock(&philo->params.printf_mutex);
+        return;
+    }
     pthread_mutex_unlock(&philo->params.death_mutex);
     if (philosopher->state == FORK_TAKEN)
         printf("%ld %d has taken a fork\n", elapsed_time(philo->params.start_timer), philosopher->nbr_of_philos);
@@ -44,6 +47,7 @@ static  t_boolean take_forks(t_philo *philo, t_philo_instance *philosopher)
         pthread_mutex_lock(&philo->params.death_mutex);
         philo->params.death = TRUE;
         pthread_mutex_unlock(&philo->params.death_mutex);
+        pthread_mutex_unlock(&philo->params.philo_forks[philosopher->nbr_of_philos - 1]);
         return FALSE;
     }
     philosopher->state = FORK_TAKEN;
@@ -90,6 +94,8 @@ void    philo_routine(t_thread_data *data)
     meal_count = FALSE;
     if (philosopher.nbr_of_eats)
         meal_count = TRUE;
+    if (!(philosopher.nbr_of_philos % 2))
+        msleep(1);
     while (!meal_count || philosopher.nbr_of_eats)
     {   
         if(philo->params.death || !take_forks(philo, &philosopher))
