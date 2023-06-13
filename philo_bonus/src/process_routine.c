@@ -6,17 +6,11 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:34:28 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/12 20:10:35 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:19:43 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers_bonus.h"
-
-static void process_print_thread(t_philo_bonus *philo_bonus)
-{
-    pthread_t thread_id;
-    
-}
 
 static void print_philo_state(t_philo_bonus *philo_bonus)
 {
@@ -42,11 +36,12 @@ static  void    take_forks(t_philo_bonus *philo_bonus)
 {
     sem_wait(philo_bonus->bonus_params.forks_sem);
     if (philo_bonus->philo_info.wake_time &&
-        philo_bonus->philo_info.wake_time + philo_bonus->philo_info.time_to_die
-        >= elapsed_time(philo_bonus->bonus_params.start_time))
+        elapsed_time(philo_bonus->bonus_params.start_time) - philo_bonus->philo_info.wake_time
+        >= (long) philo_bonus->philo_info.time_to_die)
     {
         philo_bonus->philo_info.state = DIED;
         print_philo_state(philo_bonus);
+        return;
     }
     philo_bonus->philo_info.state = FORK_TAKEN;
     print_philo_state(philo_bonus);

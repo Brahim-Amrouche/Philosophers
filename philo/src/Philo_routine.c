@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:49:25 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/12 20:20:08 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:15:26 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static  void    printf_philo_state(t_philo *philo, t_philo_instance *philosopher)
 {
-    // pthread_mutex_lock(&philo->params.printf_mutex);
+    pthread_mutex_lock(&philo->params.printf_mutex);
     pthread_mutex_lock(&philo->params.death_mutex);
     if (philo->params.death)
     {
         pthread_mutex_unlock(&philo->params.death_mutex);
-        // pthread_mutex_unlock(&philo->params.printf_mutex);
+        pthread_mutex_unlock(&philo->params.printf_mutex);
         return;
     }
     pthread_mutex_unlock(&philo->params.death_mutex);
@@ -33,7 +33,7 @@ static  void    printf_philo_state(t_philo *philo, t_philo_instance *philosopher
         printf("%ld %d is thinking\n", elapsed_time(philo->params.start_timer), philosopher->nbr_of_philos);
     else if (philosopher->state == DIED)
         printf("%ld %d died\n", elapsed_time(philo->params.start_timer), philosopher->nbr_of_philos);
-    // pthread_mutex_unlock(&philo->params.printf_mutex);
+    pthread_mutex_unlock(&philo->params.printf_mutex);
 }
 
 static  t_boolean take_forks(t_philo *philo, t_philo_instance *philosopher)
