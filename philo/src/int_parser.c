@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:22:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/06 20:58:22 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:38:40 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parse_philo(int argc, char *argv[], t_philo *philo)
         exit_philo("too many arguments\n", philo);
 	else if (argc < 5)
 		exit_philo("too little arguments\n", philo);
-    else if (!ft_str_is_integer(argv[1], &philo->philo_info.nbr_of_philos) || philo->philo_info.nbr_of_philos <= 0)
+    else if (!ft_str_is_integer(argv[1], &philo->philo_info.philo_id) || philo->philo_info.philo_id <= 0)
         exit_philo("Wrong number of philosophers\n", philo);
 	else if (!ft_str_is_integer(argv[2], &philo->philo_info.time_to_die) || philo->philo_info.time_to_die <= 0)
 		exit_philo("Wrong time to die\n", philo);
