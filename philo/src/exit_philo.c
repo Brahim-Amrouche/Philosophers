@@ -12,9 +12,9 @@
 
 #include "Philosophers.h"
 
-void    exit_philo(char *message, t_philo *philo)
+void	exit_philo(char *message, t_philo *philo)
 {
-    size_t	str_len;
+	size_t	str_len;
 	size_t	i;
 
 	if (!message)
@@ -25,4 +25,3 @@ void    exit_philo(char *message, t_philo *philo)
 		write(2, (message + i), 1);
 	philo->parsing_error = TRUE;
 }
-

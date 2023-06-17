@@ -20,11 +20,11 @@ static int	ft_isspace(int c)
 	return (0);
 }
 
-t_boolean   ft_isdigit(int c)
+t_boolean	ft_isdigit(int c)
 {
-    if (c >= '0' && c <= '9')
-        return TRUE;
-    return FALSE;
+	if (c >= '0' && c <= '9')
+		return (TRUE);
+	return (FALSE);
 }
 
 long	ft_atoi(const char *str)

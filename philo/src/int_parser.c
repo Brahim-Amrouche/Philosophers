@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:22:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/16 18:38:40 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:26:47 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,26 @@ t_boolean	ft_str_is_integer(const char *str, int *res)
 	return (TRUE);
 }
 
-
 void	parse_philo(int argc, char *argv[], t_philo *philo)
 {
-    if (argc > 6)
-        exit_philo("too many arguments\n", philo);
+	if (argc > 6)
+		exit_philo("too many arguments\n", philo);
 	else if (argc < 5)
 		exit_philo("too little arguments\n", philo);
-    else if (!ft_str_is_integer(argv[1], &philo->philo_info.philo_id) || philo->philo_info.philo_id <= 0)
-        exit_philo("Wrong number of philosophers\n", philo);
-	else if (!ft_str_is_integer(argv[2], &philo->philo_info.time_to_die) || philo->philo_info.time_to_die <= 0)
+	else if (!ft_str_is_integer(argv[1], &philo->philo_info.philo_id)
+		|| philo->philo_info.philo_id <= 0)
+		exit_philo("Wrong number of philosophers\n", philo);
+	else if (!ft_str_is_integer(argv[2], &philo->philo_info.time_to_die)
+		|| philo->philo_info.time_to_die <= 0)
 		exit_philo("Wrong time to die\n", philo);
-	else if(!ft_str_is_integer(argv[3], &philo->philo_info.time_to_eat) || philo->philo_info.time_to_eat <= 0)
+	else if (!ft_str_is_integer(argv[3], &philo->philo_info.time_to_eat)
+		|| philo->philo_info.time_to_eat <= 0)
 		exit_philo("Wrong time to eat\n", philo);
-	else if(!ft_str_is_integer(argv[4], &philo->philo_info.time_to_sleep) || philo->philo_info.time_to_sleep <= 0)
+	else if (!ft_str_is_integer(argv[4], &philo->philo_info.time_to_sleep)
+		|| philo->philo_info.time_to_sleep <= 0)
 		exit_philo("Wrong time to sleep\n", philo);
-	else if(argc == 6 && (!ft_str_is_integer(argv[5], &philo->philo_info.nbr_of_eats) || philo->philo_info.nbr_of_eats <= 0))
+	else if (argc == 6 && (!ft_str_is_integer(argv[5],
+				&philo->philo_info.nbr_of_eats)
+			|| philo->philo_info.nbr_of_eats <= 0))
 		exit_philo("Wrong number of eats\n", philo);
-}   
+}
