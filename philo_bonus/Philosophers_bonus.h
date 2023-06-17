@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:52:50 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/12 18:41:41 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/17 22:01:58 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <semaphore.h>
 #include <limits.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -58,7 +59,10 @@ typedef struct s_philo_bonus_params
     time_t           start_time;
     sem_t            *forks_sem;
     sem_t            *death_sem;
+    sem_t			 *eat_time_sem;
+	sem_t			 *syncro_sem;
     pid_t            *processes_ids;
+	int				 eat_count;
 }   t_philo_bonus_params;
 
 typedef struct s_philo_bonus
