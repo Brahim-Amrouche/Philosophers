@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "limits.h": "c",
-        "philosophers.h": "c"
+        "philosophers.h": "c",
+        "philosophers_bonus.h": "c"
     }
 }

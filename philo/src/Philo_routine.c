@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:49:25 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/17 16:41:09 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/18 19:50:12 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static void	eat(t_philo *philo, t_philo_instance *philosopher)
 	msleep(philosopher->time_to_eat);
 	pthread_mutex_unlock(philosopher->own_mutex);
 	pthread_mutex_unlock(philosopher->other_mutex);
+	pthread_mutex_lock(&philosopher->wake_mutex);
+	philosopher->nbr_of_eats--;
+	pthread_mutex_unlock(&philosopher->wake_mutex);
 }
 
 static void	go_sleep(t_philo *philo, t_philo_instance *philosopher)
@@ -59,9 +62,10 @@ void	philo_routine(t_philo_instance *data)
 	{
 		take_forks(philo, data);
 		eat(philo, data);
+		if (count_eats && !data->nbr_of_eats)
+			break ;
 		go_sleep(philo, data);
 		think(philo, data);
-		data->nbr_of_eats--;
 	}
 	pthread_mutex_lock(&data->wake_mutex);
 	data->die = TRUE;
