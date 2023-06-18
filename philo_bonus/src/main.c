@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 19:04:12 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/17 22:53:13 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/18 13:42:06 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,17 @@ int main(int argc, char *argv[])
     }
     sem_post(philo_bonus.bonus_params.syncro_sem);
     i = 0;
-    while(waitpid(0, &status, 0) && philo_bonus.bonus_params.eat_count < philo_bonus.philo_info.nbr_of_philos)
+    while(philo_bonus.bonus_params.eat_count < philo_bonus.philo_info.nbr_of_philos)
     {
+        waitpid(0, &status, 0);
         if (status == 0)
             philo_bonus.bonus_params.eat_count++;
         else
             break;
     }
+    printf("%d status code\n", status);
     i = 0;
-    while (!status && i < philo_bonus.philo_info.nbr_of_philos)
+    while (i < philo_bonus.philo_info.nbr_of_philos)
     {
         if (!status)
             waitpid(philo_bonus.bonus_params.processes_ids[i++], NULL,  0);

@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:34:28 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/17 22:55:04 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:09:11 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,13 @@ void    process_supervisor(t_philo_bonus *philo_bonus)
     while (TRUE)
     {
         sem_wait(philo_bonus->bonus_params.death_sem);
+        sem_wait(philo_bonus->bonus_params.eat_time_sem);
         if (elapsed_time(philo_bonus->bonus_params.start_time) - philo_bonus->philo_info.wake_time > philo_bonus->philo_info.time_to_die)
+        {
+            printf("%ld %d died\n", elapsed_time(philo_bonus->bonus_params.start_time), philo_bonus->philo_info.philo_id);
             break;
+        }
+        sem_post(philo_bonus->bonus_params.eat_time_sem);
         sem_post(philo_bonus->bonus_params.death_sem);
     }
     exit(1);
