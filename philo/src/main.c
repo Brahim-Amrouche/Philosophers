@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:57:50 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/17 16:56:25 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/19 20:26:02 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ static void	initiate_threads(t_philo *philo)
 		set_philo_info(philo, i);
 		if (philo->parsing_error)
 			return ;
-		if (pthread_create(&philo->params.threads_id[i], NULL, (void *) philo_routine,
+		if (pthread_create(&philo->params.threads_id[i], NULL,
+				(void *) philo_routine,
 				&philo->params.philos_data[i]))
 		{
 			exit_philo("couldn't create threads\n", philo);

@@ -12,9 +12,9 @@
 
 #include "Philosophers_bonus.h"
 
-void    exit_philo(char *message)
+void	exit_philo(char *message)
 {
-    size_t	str_len;
+	size_t	str_len;
 	size_t	i;
 
 	if (!message)
@@ -25,4 +25,3 @@ void    exit_philo(char *message)
 		write(2, (message + i), 1);
 	exit(1);
 }
-
