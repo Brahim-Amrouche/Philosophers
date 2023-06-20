@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:34:28 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/19 20:21:54 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:26:37 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,11 @@ static void	eat(t_philo_bonus *philo_bonus)
 {
 	philo_bonus->philo_info.state = EATING;
 	print_philo_state(philo_bonus);
-	sem_wait(philo_bonus->bonus_params.eat_time_sem);
-	philo_bonus->philo_info.wake_time
-		= elapsed_time(philo_bonus->bonus_params.start_time);
-	sem_post(philo_bonus->bonus_params.eat_time_sem);
+	gettimeofday(&philo_bonus->philo_info.wake_time, NULL);
 	msleep(philo_bonus->philo_info.time_to_eat);
 	sem_post(philo_bonus->bonus_params.forks_sem);
 	sem_post(philo_bonus->bonus_params.forks_sem);
-	sem_wait(philo_bonus->bonus_params.eat_time_sem);
 	philo_bonus->philo_info.nbr_of_eats--;
-	sem_post(philo_bonus->bonus_params.eat_time_sem);
 }
 
 static void	philo_sleep(t_philo_bonus *philo_bonus)
@@ -62,14 +57,14 @@ void	process_routine(t_philo_bonus *philo_bonus)
 	pthread_detach(supervisor_id);
 	if (philo_bonus->philo_info.philo_id % 2)
 		usleep(500);
+	gettimeofday(&philo_bonus->philo_info.wake_time, NULL);
 	while (TRUE)
 	{
 		take_forks(philo_bonus);
 		eat(philo_bonus);
 		if (philo_bonus->philo_info.count_meals
 			&& !philo_bonus->philo_info.nbr_of_eats)
-			msleep(philo_bonus->philo_info.time_to_sleep
-				+ philo_bonus->philo_info.time_to_eat);
+			exit(0);
 		philo_sleep(philo_bonus);
 		thinking(philo_bonus);
 	}

@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:52:50 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/19 20:14:36 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:09:50 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct philo_instance
 	int						nbr_of_eats;
 	int						philo_id;
 	t_philo_states			state;
-	time_t					wake_time;
+	struct timeval			wake_time;
 	t_boolean				count_meals;
 }							t_philo_instance;
 

@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 20:12:23 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/19 20:23:29 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:30:21 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,23 @@ void	print_philo_state(t_philo_bonus *philo_bonus)
 
 void	process_supervisor(t_philo_bonus *philo_bonus)
 {
+	time_t	current_time;
+	time_t	last_eat;
+
 	while (TRUE)
 	{
 		sem_wait(philo_bonus->bonus_params.death_sem);
-		sem_wait(philo_bonus->bonus_params.eat_time_sem);
-		if (philo_bonus->philo_info.count_meals
-			&& !philo_bonus->philo_info.nbr_of_eats)
-		{
-			sem_post(philo_bonus->bonus_params.eat_time_sem);
-			sem_post(philo_bonus->bonus_params.death_sem);
-			exit(0);
-		}
-		if (philo_bonus->philo_info.wake_time
-			&& elapsed_time(philo_bonus->bonus_params.start_time)
-			- philo_bonus->philo_info.wake_time
-			> philo_bonus->philo_info.time_to_die)
+		current_time = elapsed_time(0);
+		last_eat = (philo_bonus->philo_info.wake_time.tv_sec * 1000)
+			+ (philo_bonus->philo_info.wake_time.tv_usec / 1000);
+		if (last_eat
+			&& current_time - last_eat >= philo_bonus->philo_info.time_to_die)
 		{
 			printf("%ld %d died\n",
 				elapsed_time(philo_bonus->bonus_params.start_time),
 				philo_bonus->philo_info.philo_id);
 			break ;
 		}
-		sem_post(philo_bonus->bonus_params.eat_time_sem);
 		sem_post(philo_bonus->bonus_params.death_sem);
 	}
 	exit(1);
