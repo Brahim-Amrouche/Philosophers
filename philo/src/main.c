@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:57:50 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/20 17:04:02 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:30:39 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static void	supervisor_helper(t_philo *philo, int i)
 	pthread_mutex_lock(&philo->params.philos_data[i].wake_mutex);
 	if (philo->params.philos_data[i].die)
 		philo->params.died_count++;
-	else if (philo->params.philos_data[i].wake_time
-		&& elapsed_time(philo->params.start_timer)
+	else if (elapsed_time(philo->params.start_timer)
 		- philo->params.philos_data[i].wake_time
 		>= philo->philo_info.time_to_die)
 	{

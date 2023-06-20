@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:37:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/17 16:55:27 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:58:39 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ time_t					elapsed_time(time_t start);
 //philo_printf.c
 void					printf_philo_state(t_philo *philo,
 							t_philo_instance *philosopher, char *message);
+void					init_wake_time(t_philo *philo, t_philo_instance *data);
 // Philo_routine.c
 void					philo_routine(t_philo_instance *data);
 // cleaner.c

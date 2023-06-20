@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:49:25 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/20 17:22:05 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:59:07 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ void	philo_routine(t_philo_instance *data)
 	count_eats = FALSE;
 	if (data->nbr_of_eats)
 		count_eats = TRUE;
-	pthread_mutex_lock(&data->wake_mutex);
-	data->wake_time = elapsed_time(philo->params.start_timer);
-	pthread_mutex_unlock(&data->wake_mutex);
+	init_wake_time(philo, data);
 	while (!data->die && (!count_eats || data->nbr_of_eats))
 	{
 		take_forks(philo, data);
