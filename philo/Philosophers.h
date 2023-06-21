@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:37:15 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/20 19:58:39 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:50:04 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void					thread_id_malloc(t_philo *philo);
 //int_parser.c
 void					parse_philo(int argc, char *argv[], t_philo *philo);
 //time.c
-void					msleep(time_t delay);
+void					msleep(time_t delay, t_philo *philo,
+							t_philo_instance *philosopher);
 time_t					elapsed_time(time_t start);
 //philo_printf.c
 void					printf_philo_state(t_philo *philo,

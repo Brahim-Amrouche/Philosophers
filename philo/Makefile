@@ -1,4 +1,13 @@
-SRCS = ${wildcard  ./src/*.c} ${wildcard  ./src/**/*.c}
+SRCS = src/Philo_routine.c 		\
+		src/cleaner.c			\
+		src/exit_philo.c		\
+		src/helpers/ft_atoi.c	\
+		src/helpers/ft_strlen.c	\
+		src/initiators.c		\
+		src/int_parser.c		\
+		src/main.c				\
+		src/philo_printf.c		\
+		src/time.c				\
 
 OBJS = ${SRCS:%.c=%.o}
 

@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 19:04:12 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/20 20:17:59 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:49:04 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,16 @@ int	main(int argc, char *argv[])
 	philo_bonus_initiator(&philo_bonus);
 	generate_processes(&philo_bonus);
 	status = 0;
-	while (!status
-		&& philo_bonus.bonus_params.eat_count
-		!= philo_bonus.philo_info.nbr_of_philos)
+	while (waitpid(0, &status, 0) != -1)
 	{
-		waitpid(0, &status, 0);
-		if (status == 0)
-			philo_bonus.bonus_params.eat_count++;
+		if (status)
+		{
+			i = 0;
+			while (i < philo_bonus.philo_info.nbr_of_philos)
+				kill(philo_bonus.bonus_params.processes_ids[i++], SIGKILL);
+			break ;
+		}
 	}
-	i = 0;
-	while (i < philo_bonus.philo_info.nbr_of_philos)
-		kill(philo_bonus.bonus_params.processes_ids[i++], SIGKILL);
 	cleanup(&philo_bonus);
 	return (0);
 }

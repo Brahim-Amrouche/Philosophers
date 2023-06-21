@@ -1,4 +1,12 @@
-SRCS = ${wildcard  ./src/*.c} ${wildcard  ./src/**/*.c}
+SRCS = src/Process_routine_helper.c \
+		src/exit_bonus_philo.c		\
+		src/helpers/ft_atoi.c		\
+		src/helpers/ft_strlen.c		\
+		src/initiators.c			\
+		src/int_parser.c			\
+		src/main.c					\
+		src/process_routine.c		\
+		src/time.c
 
 OBJS = ${SRCS:%.c=%.o}
 
@@ -6,7 +14,7 @@ CC = cc
 
 INCLUDES = -I./ -I./src
 
-FLAGS = -Wall -Wextra -Werror ${INCLUDES} -pthread #-fsanitize=undefined,thread
+FLAGS = -Wall -Wextra -Werror ${INCLUDES} -pthread #-fsanitize=thread
 
 NAME = philo_bonus
 

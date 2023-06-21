@@ -6,7 +6,7 @@
 /*   By: bamrouch <bamrouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:34:28 by bamrouch          #+#    #+#             */
-/*   Updated: 2023/06/20 17:26:37 by bamrouch         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:40:26 by bamrouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	process_routine(t_philo_bonus *philo_bonus)
 
 	sem_wait(philo_bonus->bonus_params.syncro_sem);
 	sem_post(philo_bonus->bonus_params.syncro_sem);
+	gettimeofday(&philo_bonus->philo_info.wake_time, NULL);
 	if (pthread_create(&supervisor_id, NULL, (void *)process_supervisor,
 			philo_bonus))
 		exit(1);
 	pthread_detach(supervisor_id);
 	if (philo_bonus->philo_info.philo_id % 2)
 		usleep(500);
-	gettimeofday(&philo_bonus->philo_info.wake_time, NULL);
 	while (TRUE)
 	{
 		take_forks(philo_bonus);
